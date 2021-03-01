@@ -8,16 +8,18 @@ module.exports = function (RED) {
 		
 		w.begin({ d0: 5, d1: 6 });
 
-		w.on('ready'), () => {
+		w.on('ready', () => {
+			node.log('Ready');
 			var msg = {
 				topic:'ready',
 				payload: 'Ready'
 			};
 			node.send(msg);
-			this.status({fill:"green",shape:"ring",text:"Ready"});
-		}
+			node.status({fill:"green",shape:"ring",text:"Ready"});
+		});
 
 		w.on('data', (data) => {
+			node.log(`Recvd ${data.length} bits`);
 			var msg = {
 				topic:'bits',
 				payload: {
@@ -27,6 +29,7 @@ module.exports = function (RED) {
 			node.send(msg);
 		});
 		w.on('reader', (id) => {
+			node.log(`Read ${id.toString(16)}`);
 			var msg = {
 				topic: 'data',
 				payload: {
