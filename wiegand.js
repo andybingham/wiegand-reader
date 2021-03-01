@@ -16,11 +16,12 @@ module.exports = function (RED) {
 		w.on('data', (data) => {
 			node.log(`Recvd ${data.length} bits`);
 			if (data.length < 34) {
-				node.status({fill:"Failed",shape:"ring",text:'Got ${data.length} bits'});
+				node.status({fill:"Failed",shape:"ring",text:`Only ${data.length} bits`});
 			}
 		});
 		w.on('reader', (id) => {
 			node.log(`Read ${id.toString(16)}`);
+			node.status({fill:"green",shape:"ring",text:`Read ${id.toString(16)}`});
 			var msg = {
 				topic: 'tag',
 				payload: {
