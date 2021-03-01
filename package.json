@@ -1,0 +1,22 @@
+{
+  "name": "node-red-contrib-wiegand-rfidreader",
+  "version": "1.0.0",
+  "description": "Read RFID tags from a wiegand RFID Door module",
+  "scripts": {},
+  "keywords": [
+    "wiegand",
+    "rfid",
+    "node-red"
+  ],
+  "author": "Andy Bingham",
+  "license": "ISC",
+  "dependencies": {
+    "node-wiegand": "github:bestpika/node-wiegand",
+    "wiegand-node": "^1.1.9"
+  },
+  "node-red": {
+    "nodes": {
+      "wiegand-reader": "wiegand.js"
+    }
+  }
+}

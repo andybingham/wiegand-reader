@@ -1,0 +1,26 @@
+<script type="text/javascript">
+    RED.nodes.registerType('woegand-reader',{
+        category: 'rfid',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "font-awesome/fa-door-open",
+        label: function() {
+            return this.name||"wiegand-reader";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="wiegand-reader">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="lower-case">
+    <p>A node to publish messages from a wiegand rfid door reader</p>
+</script>
