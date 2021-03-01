@@ -8,11 +8,21 @@ module.exports = function (RED) {
 		
 		w.begin({ d0: 5, d1: 6 });
 		w.on('data', (data) => {
-			node.warn(`Got ${data.length} bits from wiegand`);
+			var msg = {
+				topic:'msg',
+				payload: data.length
+			};
+			node.send(msg);
 		});
 		w.on('reader', (id) => {
-			node.warn(`Got ${id.toString(16)} from RFID reader`);
-			node.send(id.toString(16));
+			var msg = {
+				topic: 'data',
+				payload: {
+					int: id,
+					hex: id.toString(16),
+					oct: id.toString(8)
+				}
+			}
 		});
 	}
 
