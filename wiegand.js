@@ -7,10 +7,22 @@ module.exports = function (RED) {
 		var node = this;
 		
 		w.begin({ d0: 5, d1: 6 });
+
+		w.on('ready'), () => {
+			var msg = {
+				topic:'ready',
+				payload: 'Ready'
+			};
+			node.send(msg);
+			this.status({fill:"green",shape:"ring",text:"Ready"});
+		}
+
 		w.on('data', (data) => {
 			var msg = {
-				topic:'msg',
-				payload: data.length
+				topic:'bits',
+				payload: {
+					length: data.length
+				}
 			};
 			node.send(msg);
 		});
