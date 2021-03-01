@@ -8,10 +8,10 @@ module.exports = function (RED) {
 		
 		w.begin({ d0: 5, d1: 6 });
 		w.on('data', (data) => {
-			node.log(`Got ${data.length} bits from wiegand with data`);
+			node.warn(`Got ${data.length} bits from wiegand`);
 		});
 		w.on('reader', (id) => {
-			node.log(`Got ${id.toString(16)} from RFID reader`);
+			node.warn(`Got ${id.toString(16)} from RFID reader`);
 			node.send(id.toString(16));
 		});
 	}
