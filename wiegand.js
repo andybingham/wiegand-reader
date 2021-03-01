@@ -8,14 +8,14 @@ module.exports = function (RED) {
 		var node = this;
 		node.w = (node.w) ? node.w : new Wiegand();
 		
-		w.begin({ d0: 5, d1: 6 });
+		node.w.begin({ d0: 5, d1: 6 });
 
-		w.on('ready', () => {
+		node.w.on('ready', () => {
 			node.log('Ready');
 			node.status({ fill: "green", shape: "ring", text: "Ready" });
 		});
 
-		w.on('data', (data) => {
+		node.w.on('data', (data) => {
 			node.log(`Recvd ${data.length} bits`);
 			if (data.length < 34) {
 				node.status({ fill: "Failed", shape: "triangle", text: `Only ${data.length} bits` });
@@ -28,7 +28,7 @@ module.exports = function (RED) {
 				node.send(msg);
 			}
 		});
-		w.on('reader', (id) => {
+		node.w.on('reader', (id) => {
 			node.log(`Read ${id.toString(16)}`);
 			node.status({ fill: "green", shape: "ring", text: `Read ${id.toString(16)}` });
 			var msg = {
