@@ -17,19 +17,27 @@ module.exports = function (RED) {
 			node.log(`Recvd ${data.length} bits`);
 			if (data.length < 34) {
 				node.status({ fill: "Failed", shape: "triangle", text: `Only ${data.length} bits` });
+				var msg = {
+					topic: 'bad',
+					payload: {
+						bits: data.length
+					}
+				}
+				node.send(msg);	
 			}
 		});
 		w.on('reader', (id) => {
 			node.log(`Read ${id.toString(16)}`);
 			node.status({ fill: "green", shape: "ring", text: `Read ${id.toString(16)}` });
 			var msg = {
-				topic: 'tag',
+				topic: 'good',
 				payload: {
 					int: id,
 					hex: id.toString(16),
 					oct: id.toString(8)
 				}
 			}
+			node.send(msg);
 		});
 
 		node.on('close',()=>{
