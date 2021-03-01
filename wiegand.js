@@ -10,28 +10,19 @@ module.exports = function (RED) {
 
 		w.on('ready', () => {
 			node.log('Ready');
-			var msg = {
-				topic:'ready',
-				payload: 'Ready'
-			};
-			node.send(msg);
 			node.status({fill:"green",shape:"ring",text:"Ready"});
 		});
 
 		w.on('data', (data) => {
 			node.log(`Recvd ${data.length} bits`);
-			var msg = {
-				topic:'bits',
-				payload: {
-					length: data.length
-				}
-			};
-			node.send(msg);
+			if (data.length < 34) {
+				node.status({fill:"Failed",shape:"ring",text:'Got ${data.length} bits'});
+			}
 		});
 		w.on('reader', (id) => {
 			node.log(`Read ${id.toString(16)}`);
 			var msg = {
-				topic: 'data',
+				topic: 'tag',
 				payload: {
 					int: id,
 					hex: id.toString(16),
