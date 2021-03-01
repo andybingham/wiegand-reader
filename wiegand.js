@@ -1,11 +1,15 @@
 const Wiegand = require('node-wiegand');
-const w = new Wiegand();
 
 module.exports = function (RED) {
+	var w = false;
+
 	function WiegandNode(config) {
 		RED.nodes.createNode(this, config);
 		var node = this;
-
+		if (!w) {
+			this.w = new Wiegand();
+		}
+		
 		w.begin({ d0: 5, d1: 6 });
 
 		w.on('ready', () => {
@@ -23,7 +27,7 @@ module.exports = function (RED) {
 						bits: data.length
 					}
 				}
-				node.send(msg);	
+				node.send(msg);
 			}
 		});
 		w.on('reader', (id) => {
@@ -40,7 +44,7 @@ module.exports = function (RED) {
 			node.send(msg);
 		});
 
-		node.on('close',()=>{
+		node.on('close', () => {
 			node.log(`Closing node, stopping IRQs`);
 			w.stop();
 		});
