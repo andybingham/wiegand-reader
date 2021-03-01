@@ -1,15 +1,15 @@
 <script type="text/javascript">
-    RED.nodes.registerType('woegand-reader',{
+    RED.nodes.registerType('wiegand-reader', {
         category: 'rfid',
         color: '#a6bbcf',
         defaults: {
-            name: {value:""}
+            name: { value: "Door Reader" }
         },
-        inputs:0,
-        outputs:1,
+        inputs: 0,
+        outputs: 1,
         icon: "font-awesome/fa-door-open",
-        label: function() {
-            return this.name||"wiegand-reader";
+        label: function () {
+            return this.name || "wiegand-reader";
         }
     });
 </script>
@@ -18,6 +18,10 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-name"><i class="fa fa-tag"></i> D0 Pin</label>
+        <input type="text" id="node-input-name" placeholder="pinD0">
+        <label for="node-input-name"><i class="fa fa-tag"></i> D1 Pin</label>
+        <input type="text" id="node-input-name" placeholder="pinD1">
     </div>
 </script>
 
