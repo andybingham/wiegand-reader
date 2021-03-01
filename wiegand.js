@@ -16,7 +16,7 @@ module.exports = function (RED) {
 		});
 
 		node.w.on('data', (data) => {
-			node.log(`Recvd ${data.length} bits`);
+			node.log(`Recvd ${data.length} bits : ${data.join('')}`);
 			if (data.length < 26) {
 				node.status({ fill: "Failed", shape: "triangle", text: `Only ${data.length} bits` });
 				var msg = {
