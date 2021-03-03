@@ -1,9 +1,10 @@
-Const Gpio = require('onoff').Gpio;
+const Gpio = require('onoff').Gpio;
 
 module.exports = function (RED) {
 	var D0 = false;
 	var D1 = false;
 	var buffer = [];
+
 	function WiegandNode(config) {
 		RED.nodes.createNode(this, config);
 		var node = this;
