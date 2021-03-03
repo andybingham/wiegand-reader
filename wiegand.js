@@ -17,15 +17,11 @@ module.exports = function (RED) {
 
 		this.D0.watch(()=>{
 			node.buffer.push(0);
-			if (node.buffer.length >= 34) {
-				node.log('Buffered');
-			}
+			node.log(`D0 Buffered: ${buffer.length}`);
 		});
 		this.D1.watch(()=>{
 			node.buffer.push(1);
-			if (node.buffer.length >= 34) {
-				node.log('Buffered');
-			}
+			node.log(`D1 Buffered: ${buffer.length}`)
 		});
 
 		node.status({ fill: "green", shape: "ring", text: "Ready" });
