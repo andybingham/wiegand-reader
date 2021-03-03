@@ -1,4 +1,4 @@
-Const Gpio = require('onoff').Gpio
+Const Gpio = require('onoff').Gpio;
 
 module.exports = function (RED) {
 	var D0 = false;
@@ -6,7 +6,7 @@ module.exports = function (RED) {
 	var buffer = [];
 	function WiegandNode(config) {
 		RED.nodes.createNode(this, config);
-		var nodes = this;
+		var node = this;
 		// which pins to use
 		pinD0 = 17;
 		pinD1 = 18;
