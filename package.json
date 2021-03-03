@@ -15,7 +15,7 @@
     "url": "git+https://github.com/andybinghan/wiegand-reader.git"
   },
   "dependencies": {
-    "node-wiegand": "github:bestpika/node-wiegand"
+    "onoff": "^4.1.2"
   },
   "node-red": {
     "nodes": {

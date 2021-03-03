@@ -1,50 +1,37 @@
-const Wiegand = require('node-wiegand');
+Const Gpio = require('onoff').Gpio
 
 module.exports = function (RED) {
-	var w = false;
-
+	var D0 = false;
+	var D1 = false;
+	var buffer = [];
 	function WiegandNode(config) {
 		RED.nodes.createNode(this, config);
-		var node = this;
-		node.w = (node.w) ? node.w : new Wiegand();
-		
-		node.w.begin({ d0: 5, d1: 6 });
+		var nodes = this;
+		// which pins to use
+		pinD0 = 17;
+		pinD1 = 18;
+		// set up the pins for rising trigger
+		this.D0 = new Gpio(pinD0, 'in', 'rising');
+		this.D1 = new Gpio(pinD1, 'in', 'rising');
 
-		node.w.on('ready', () => {
-			node.log('Ready');
-			node.status({ fill: "green", shape: "ring", text: "Ready" });
+		this.D0.watch(()=>{
+			node.buffer.push(0);
 		});
-
-		node.w.on('data', (data) => {
-			node.log(`Recvd ${data.length} bits : ${data.join('')}`);
-			if (data.length < 26) {
-				node.status({ fill: "Failed", shape: "triangle", text: `Only ${data.length} bits` });
-				var msg = {
-					topic: 'bad',
-					payload: {
-						bits: data.length
-					}
-				}
-				node.send(msg);
+		this.D1.watch(()=>{
+			node.buffer.push(1);
+			if (node.buffer.length >= 34) {
+				node.log('Buffered');s
 			}
 		});
-		node.w.on('reader', (id) => {
-			node.log(`Read ${id.toString(16)}`);
-			node.status({ fill: "green", shape: "ring", text: `Read ${id.toString(16)}` });
-			var msg = {
-				topic: 'good',
-				payload: {
-					int: id,
-					hex: id.toString(16),
-					oct: id.toString(8)
-				}
-			}
-			node.send(msg);
-		});
+
+		node.status({ fill: "green", shape: "ring", text: "Ready" });
+		node.log('Ready');
 
 		node.on('close', () => {
-			node.log(`Closing node, stopping IRQs`);
-			w.stop();
+			this.D0.unwatchAll()
+			this.D1.unwatchAll()
+			node.status({ fill: "red", shape: "ring", text: "Stopped" });
+			node.log('Stopped');
 		});
 	}
 
